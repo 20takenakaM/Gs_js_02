@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>myMemoPad</title>
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+<link rel="resetsheet" href="css/reset.css">
+</head>
+<body>
+<link rel="jquery" href="js/jquery-2.1.3.min.js">
+
+<header>
+<h1>1Week Challenge</h1>
+</header>
+<main>
+    <ul>
+        <li><input type="date" name="example1" id="today"></li>
+        <!--<li id="today"></li>-->
+        <li>体重（kg）</li>
+        <li id="weight"></li>
+    </ul>
+   
+    <ul>
+        <li id="save">Save</li>
+        <li id="clear">Clear</li>
+    </ul>
+    
+    <ul>
+        <li><a class="moviechange" href="VBCYtMVGYLY">Monday</a></li>
+        <li><a class="moviechange" href="YcS2pDE7lOo">Tueseday</a></li>
+        <li><a class="moviechange" href="Onh_pUSpht4">Wednesday</a></li>
+        <li><a class="moviechange" href="miNuW_AvDXA">Thursday</a></li>
+        <li><a class="moviechange" href="QIyrb-dGzPY">Friday</a></li>
+        <li><a class="moviechange" href="aXqlkNKXVXM">Saturday</a></li>
+    </ul>
+    
+        <iframe class="iframe" width="560" height="315" src="https://www.youtube.com/embed/VBCYtMVGYLY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    
+</main>
+<table id="list">
+<!-- ここに追加データが挿入される -->
+</table>
+<script>
+
+// 日付の取得と表示
+// const now = new Date();
+// const yyyymmdd = now.getFullYear()+ "/" +
+// 	( "0"+( now.getMonth()+1 ) ).slice(-2)+ "/" +
+// 	( "0"+now.getDate() ).slice(-2);
+// $("#today").html(yyyymmdd);
+// 更新するとlocalStorageが上書きされるため中止します
+
+// ポップアップと表示
+ const weight = prompt("体重を入力してください")
+ $("#weight").html(weight);
+
+//1.Save クリックイベント
+$("#save").on("click",function(){
+    const day =$("#today").val();
+    // console.log(day);
+    // console.log(day.textContent);
+    const w =document.getElementById("weight");
+    // console.log(w);
+    // console.log(w.textContent);
+    localStorage.setItem(day,w.textContent);
+    const html =`
+    <tr>
+    <th>${day}</th>
+    <td>${w.textContent}</td>
+    </tr>`
+    $("#list").append(html);
+});
+
+
+//2.clear クリックイベント
+$("#clear").on("click",function(){
+    localStorage.clear();
+    $("#list").empty();
+});
+
+//3.ページ読み込み：保存データ取得表示
+for(let i=0; i<localStorage.length; i++){
+    const day = localStorage.key(i);
+    const w = localStorage.getItem(day);
+    const html = `
+    <tr>
+        <th>${day}</th>
+        <td>${w}</td>
+    </tr>`
+    $("#list").append(html);
+}
+
+// youtube変更
+$(".moviechange").click(function(){
+  var id = $(this).attr('href');
+  $(".iframe").attr("src","https://www.youtube.com/embed/" + id );
+  return false;
+});
+
+// localstorageからグラフへ反映させるデータ取得Chart.jsに反映できないため中止します
+
+// for(let i=0; i<1; i++) {
+//   const key_day1 = localStorage.key(i);
+//   console.log(key_day1);
+//   const key_w1 = localStorage.getItem(key_day1);
+// }
+// for(let i=0; i<2; i++) {
+//   const key_day2 = localStorage.key(i);
+//   const key_w2 = localStorage.getItem(key_day2);
+// }
+// for(let i=0; i<3; i++) {
+//   const key_day3 = localStorage.key(i);
+//   const key_w3 = localStorage.getItem(key_day3);
+// }
+// for(let i=0; i<4; i++) {
+//   const key_day4 = localStorage.key(i);
+//   const key_w4 = localStorage.getItem(key_day4);
+// }
+
+// // // グラフ表示 反映できなかったため中止
+
+// const ctx = document.getElementById('ex_chart');
+
+// const data = {
+//     labels: new Array(key_day1,key_day2,key_day3,key_day4),
+//     datasets: [{
+//         label: '体重推移',
+//         data: [880, 740, 900, 520, 930],
+//         borderColor: 'rgba(255, 100, 100, 1)'
+//     }]
+// };
+
+// const options = {};
+
+// const ex_chart = new Chart(ctx, {
+//     type: 'line',
+//     data: data,
+//     options: options
+// });
+
+
+
+
+
+
+
+
+
+</script>
+<footer><small></small></footer>
+</body>
+</html>
